@@ -51,7 +51,7 @@ public abstract class Cdist extends RExternalBuiltinNode.Arg4 {
 
     static {
         Casts casts = new Casts(Cdist.class);
-        casts.arg(0).mustBe(nullValue().not(), RError.Message.VECTOR_IS_TOO_LARGE).mustBe(missingValue().not()).asDoubleVector();
+        casts.arg(0).mustBe(nullValue().not(), RError.Message.VECTOR_IS_TOO_LARGE).mustBe(missingValue().not()).asDoubleVector(true,true,true);
         casts.arg(1).asIntegerVector().findFirst();
         casts.arg(2).mustBe(instanceOf(RList.class));
         casts.arg(3).asDoubleVector().findFirst();
@@ -67,7 +67,7 @@ public abstract class Cdist extends RExternalBuiltinNode.Arg4 {
                     @Cached("create()") GetDimAttributeNode getDimNode) {
         if (!getDimNode.isMatrix(x)) {
             // Note: otherwise array index out of bounds
-            throw error(Message.MUST_BE_SQUARE_MATRIX, "x");
+            throw error(Message.NON_MATRIX, "dist");
         }
         int nr = getDimNode.nrows(x);
         int nc = getDimNode.ncols(x);
